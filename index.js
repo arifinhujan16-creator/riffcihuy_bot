@@ -1,6 +1,9 @@
 const { Telegraf } = require('telegraf');
 const axios = require('axios'); const fs = require('fs');
-const TOKEN = "process.env.BOT_TOKEN"
+const http = require('http');
+http.createServer((req, res) => { res.writeHead(200); res.end('Bot Online!'); }).listen(process.env.PORT || 3000)
+
+const TOKEN = process.env.BOT_TOKEN
 const bot = new Telegraf(TOKEN);
 let db = { users:{}, game:{}, cooldown:{} };
 try{ db = JSON.parse(fs.readFileSync('db.json')); }catch{}
@@ -61,4 +64,4 @@ bot.on('text', (ctx) => {
 bot.launch().then(()=>console.log('BOT TELEGRAM ONLINE! 🔥'));
 process.once('SIGINT', () => bot.stop('SIGINT'));
 process.once('SIGTERM', () => bot.stop('SIGTERM'));
-  
+                         
